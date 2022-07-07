@@ -59,29 +59,41 @@ const Vehicle = mongoose.model("vehicle", garageSchema);
 //get all vehicles in db
 app.get("/api/v1/garage/", (req, res, next) => {
   console.log("GET/garage");
+  //return all vehicles
   Vehicle.find({}).exec((err, vehicles) => {
+    if (err) return res.status(500).send(err);
+    res.json(vehicles);
+  });
+});
+
+//add db entry with a new vehicle object
+app.post("/api/v1/garage/", (req, res, next) => {
+  console.log("POST/garage: ", req.body);
+  const newVehicle = new Vehicle(req.body);
+  //save vehicle posted as newVehicle into db
+  newVehicle.save((err, vehicles) => {
     if (err) return res.status(500).send(err);
     res.status(200).json(vehicles);
   });
 });
 
-//update db with a new vehicle object
-app.post("/api/v1/garage/", (req, res, next) => {
-  console.log("POST/garage: ", req.body);
-  const newVehicle = req.body;
-
-  res.status(200).json(req.body);
-});
-
 //post update to a vehicle by db id
 app.put("/api/v1/garage/:id", (req, res, next) => {
+  console.log("PUT/garage by ID: ", req.params.id);
   const vehicleId = req.params.id;
   const update = req.body;
-  console.log("PUT/garage by ID: ", req.params.id);
+  Vehicle.updateOne({ _id: vehicleId }, update, (err) => {
+    if (err) return res.status(500).send(err);
+    res.sendStatus(200);
+  });
 });
 
 //delete vehicle by db id
 app.delete("/api/v1/garage/:id?", (req, res, next) => {
-  const idToDelete = req.query.id;
   console.log("DELETE/garage by ID: ", req.query.id);
+  const idToDelete = req.query.id;
+  Vehicle.remove({ _id: idToDelete }, (err) => {
+    if (err) return res.status(500).send(err);
+    res.sendStatus(204);
+  });
 });
