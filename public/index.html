@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./stylesheets/styles.css" />
+    <script src="./javascripts/main.js" type="module"></script>
     <title>Andrew's Garage</title>
   </head>
   <body>
@@ -14,19 +15,73 @@
     <main>
       <div class="get">
         <h2>All items in Andrew's Garage</h2>
-        <div id="garage-list"></div>
+        <div>
+          <ul id="garage-list"></ul>
+        </div>
       </div>
       <div class="post">
         <h2>Add vehicle to garage</h2>
-        <div id="garage-form"></div>
+        <div id="garage-form">
+          <form action="" id="postForm">
+            <label for="selectType">Type</label>
+            <select name="type" id="selectType">
+              <option value="Car">Car</option>
+              <option value="Motorbike">Motorbike</option>
+            </select>
+            <label for="vehicleMake">Make</label>
+            <input type="text" name="make" id="vehicleMake" required />
+            <label for="vehicleModel">Model</label>
+            <input type="text" name="model" id="vehicleModel" required />
+            <label for="vehicleColour">Colour</label>
+            <input type="text" name="colour" id="vehicleColour" required />
+            <label for="vehicleBhp">BHP</label>
+            <input type="number" name="bhp" id="vehicleBhp" required />
+            <label for="vehicleYear">Year</label>
+            <input type="number" name="year" id="vehicleYear" required />
+            <button type="submit" id="postbtn" form="postForm" value="Submit">
+              Add to Garage
+            </button>
+          </form>
+        </div>
       </div>
       <div class="put">
         <h2>Update existing vehicle data</h2>
-        <div id="vehicleId dataPoint"></div>
+        <div id="vehicleId dataPoint">
+          <form action="" id="putForm">
+            <label for="vehicleID">Vehicle ID</label>
+            <input type="text" name="_id" id="vehicleID" />
+            <label for="selectType">Type</label>
+            <select name="type" id="selectType">
+              <option value="Car">Car</option>
+              <option value="Motorbike">Motorbike</option>
+            </select>
+            <label for="vehicleMake">Make</label>
+            <input type="text" name="make" id="vehicleMake" />
+            <label for="vehicleModel">Model</label>
+            <input type="text" name="model" id="vehicleModel" />
+            <label for="vehicleColour">Colour</label>
+            <input type="text" name="colour" id="vehicleColour" />
+            <label for="vehicleBhp">BHP</label>
+            <input type="number" name="bhp" id="vehicleBhp" />
+            <label for="vehicleYear">Year</label>
+            <input type="number" name="year" id="vehicleYear" />
+            <button type="submit" form="putForm" id="putBtn">
+              Update vehicle
+            </button>
+          </form>
+        </div>
       </div>
       <div class="delete">
         <h2>Delete vehicle to garage</h2>
-        <div id="vehicleId"></div>
+        <div id="vehicleId">
+          <form action="" id="delForm">
+            <label for="vehicleID">Vehicle ID</label>
+            <input type="text" name="_id" id="vehicleID" required />
+            <button type="submit" form="delForm" id="delBtn">
+              Delete vehicle
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   </body>
