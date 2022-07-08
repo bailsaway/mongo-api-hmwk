@@ -53,7 +53,7 @@ const asyncPostCall = async () => {
 postBtn.addEventListener("click", (event) => {
   event.preventDefault();
   asyncPostCall();
-  location.reload(BASE_URL);
+  location.reload(true);
 });
 
 //DOM delete form
@@ -84,22 +84,33 @@ const asyncDeleteCall = async () => {
 delBtn.addEventListener("click", (event) => {
   event.preventDefault;
   asyncDeleteCall();
-  location.reload(BASE_URL);
+  location.reload(true);
 });
 
 //DOM Put Form
 const putForm = document.getElementById("putForm");
 const putBtn = document.getElementById("putBtn");
 
+//function to delete _id from form body
+function deleteIdFromForm(domForm) {
+  const formToAlter = new FormData(domForm);
+  formToAlter.delete("_id"); //delete _id from body to post
+  let domFormBody = JSON.stringify(Object.fromEntries(formToAlter));
+  return domFormBody;
+}
+
 //PUT update to vehicle by ID
 const asyncPutUpdate = async () => {
+  let form = JSON.parse(createFormJSON(putForm));
+  let id = form._id;
+  let body1 = deleteIdFromForm(putForm);
   try {
     const response = await fetch(`http://localhost:3333/api/v1/garage/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      // body: body1,
+      body: body1,
     });
     const data = await response.json();
     console.log("Put call response", data);
@@ -108,12 +119,8 @@ const asyncPutUpdate = async () => {
   }
 };
 
-//function to delete _id from form body
-function deleteIdFromForm(domForm) {
-  const newForm = new FormData(domForm);
-  console.log("del func", newForm);
-}
-
-putBtn.addEventListener("click", () => {
-  deleteIdFromForm(putForm);
+putBtn.addEventListener("click", (event) => {
+  event.preventDefault;
+  asyncPutUpdate();
+  location.load(true);
 });
